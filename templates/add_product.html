@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between mb-4">
+    <h3>Add Product</h3>
+    <a href="/employee" class="btn btn-outline-dark">← Back</a>
+</div>
+
+<div class="card shadow-lg p-5">
+
+    <form method="POST" action="/save-product">
+
+        <div class="mb-4">
+            <label class="fw-semibold">Name of Product</label>
+            <input type="text" name="product_name" class="form-control form-control-lg" required>
+        </div>
+
+        <div class="mb-4">
+            <label class="fw-semibold">APM</label>
+            <select name="apm" class="form-select form-select-lg" required>
+                <option value="">Select APM</option>
+                {% for a in apms %}
+                <option value="{{a.name}}">{{a.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label class="fw-semibold">Developer</label>
+            <select name="developer" class="form-select form-select-lg" required>
+                <option value="">Select Developer</option>
+                {% for d in devs %}
+                <option value="{{d.name}}">{{d.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="text-center mt-5">
+            <button class="btn btn-dark btn-lg px-5">ADD</button>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

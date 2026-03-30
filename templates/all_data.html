@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between mb-4">
+    <h2 class="fw-bold">
+        <i class="bi bi-database"></i> My Data
+    </h2>
+    <a href="/employee" class="btn btn-outline-dark">← Back</a>
+</div>
+
+<!-- PRODUCT TABLE -->
+<div class="card shadow-lg p-4 mb-5">
+    <h4 class="mb-3">
+        <i class="bi bi-box"></i> Products
+    </h4>
+
+    <table class="table table-hover table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Product</th>
+                <th>APM</th>
+                <th>Developer</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for p in products %}
+            <tr>
+                <td>{{ p.product_name }}</td>
+                <td>{{ p.apm }}</td>
+                <td>{{ p.developer }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3" class="text-center text-muted">No products added</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- SKILLS -->
+<div class="card shadow-lg p-4">
+    <h4 class="mb-3">
+        <i class="bi bi-lightbulb"></i> Skills Learned
+    </h4>
+
+    <ul class="list-group">
+        {% for s in skills %}
+        <li class="list-group-item d-flex justify-content-between">
+            {{ s.skill }}
+            <span class="badge bg-success">✔</span>
+        </li>
+        {% else %}
+        <li class="list-group-item text-muted text-center">
+            No skills added
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

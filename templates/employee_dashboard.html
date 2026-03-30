@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="mb-4 fw-bold">
+    <i class="bi bi-speedometer2"></i> Employee Dashboard
+</h2>
+
+<div class="row g-4">
+
+    <div class="col-md-4">
+        <a href="/add-product" style="text-decoration:none;">
+            <div class="card shadow-lg p-5 text-center">
+                <i class="bi bi-plus-circle fs-1 text-primary mb-3"></i>
+                <h4>Add Product</h4>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4">
+        <a href="/add-skill" style="text-decoration:none;">
+            <div class="card shadow-lg p-5 text-center">
+                <i class="bi bi-lightbulb fs-1 text-warning mb-3"></i>
+                <h4>Skills Learned</h4>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4">
+        <a href="/all-data" style="text-decoration:none;">
+            <div class="card shadow-lg p-5 text-center">
+                <i class="bi bi-database fs-1 text-success mb-3"></i>
+                <h4>All Data</h4>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between mb-4">
+    <h3>Add Skill</h3>
+    <a href="/employee" class="btn btn-outline-dark">← Back</a>
+</div>
+
+<div class="card shadow-lg p-5">
+
+    <form method="POST" action="/save-skill">
+
+        <div class="mb-4">
+            <label class="fw-semibold">Skill Name</label>
+            <input type="text" name="skill" class="form-control form-control-lg" required>
+        </div>
+
+        <div class="text-center mt-5">
+            <button class="btn btn-dark btn-lg px-5">ADD</button>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
