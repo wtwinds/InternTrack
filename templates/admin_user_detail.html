@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between mb-4">
+    <h2 class="fw-bold">Admin Dashboard</h2>
+    <a href="/admin" class="btn btn-outline-dark">← Back</a>
+</div>
+
+<div class="card shadow-lg p-5">
+
+    <!-- PRODUCTS -->
+    <h4 class="mb-3 fw-bold">Product</h4>
+
+    <table class="table mb-5">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>APM</th>
+                <th>Developer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in products %}
+            <tr>
+                <td>{{ p.product_name }}</td>
+                <td>{{ p.apm }}</td>
+                <td>{{ p.developer }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3" class="text-center">No products</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- SKILLS -->
+    <h4 class="fw-bold mb-3">Skills</h4>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Skill Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in skills %}
+            <tr>
+                <td>{{ s.skill }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td class="text-center">No skills</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

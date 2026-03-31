@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{category}} text-center">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
 <div class="row justify-content-center align-items-center" style="min-height:70vh;">
     <div class="col-md-6 col-lg-5">
 
@@ -46,5 +56,14 @@
 
     </div>
 </div>
-
+<script>
+    setTimeout(function () {
+        let alert = document.querySelector(".alert");
+        if (alert) {
+            alert.classList.remove("show");
+            alert.classList.add("fade");
+            alert.style.display = "none";
+        }
+    }, 3000); // 3 seconds
+</script>
 {% endblock %}

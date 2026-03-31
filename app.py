@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, flash, request, redirect, session
 from pymongo import MongoClient
 from config import Config
 
@@ -33,8 +33,9 @@ def login():
                 return redirect("/admin")
             else:
                 return redirect("/employee")
-            
-        return "<h4 class='text-danger text-center mt-3'>Invalid Credentials</h4>"
+
+        flash("Invalid Login ID or Password", "danger")    
+        return redirect("/")
     return render_template("login.html")
 
 #------------Employee---------
@@ -43,13 +44,6 @@ def employee_dashboard():
     if session.get("role")!="employee":
         return redirect("/")
     return render_template("employee_dashboard.html", name=session.get("user"))
-
-#----------Admin-----------------
-@app.route("/admin")
-def admin_dashboard():
-    if session.get("role")!="admin":
-        return("/")
-    return render_template("admin_dashboard.html", name=session.get("user"))
 
 #-----------Add Product----------------
 @app.route("/add-product")
@@ -109,6 +103,31 @@ def all_data():
     skills = db.skills.find({"user": user})
 
     return render_template("all_data.html", products=products, skills=skills)
+
+#-----Admin Dashboard-----------------
+@app.route("/admin")
+def admin_dashboard():
+    if session.get("role") != "admin":
+        return redirect("/")
+
+    all_users = users.find({"role": "employee"})
+
+    return render_template("admin_dashboard.html", users=all_users)
+
+
+#-----Employee Detail (NEW PAGE)------
+@app.route("/admin/user/<name>")
+def admin_user_detail(name):
+    if session.get("role") != "admin":
+        return redirect("/")
+
+    user_products = products.find({"created_by": name})
+    user_skills = skills.find({"user": name})
+
+    return render_template("admin_user_detail.html",
+                           name=name,
+                           products=user_products,
+                           skills=user_skills)
 
 #---------Logout------------------------
 @app.route("/logout")
