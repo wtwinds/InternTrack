@@ -20,6 +20,7 @@
                 <th>Product</th>
                 <th>APM</th>
                 <th>Developer</th>
+                <th>Status</th> <!-- 🔥 NEW -->
             </tr>
         </thead>
 
@@ -29,10 +30,28 @@
                 <td>{{ p.product_name }}</td>
                 <td>{{ p.apm }}</td>
                 <td>{{ p.developer }}</td>
+
+                <!-- 🔥 STATUS COLUMN -->
+                <td>
+                    {% if p.status == "approved" %}
+                    <span class="badge bg-success">
+                        <i class="bi bi-check-circle-fill"></i> Approved
+                    </span>
+                    {% elif p.status == "rejected" %}
+                    <span class="badge bg-danger">
+                        <i class="bi bi-x-circle-fill"></i> Rejected
+                    </span>
+                    {% else %}
+                    <span class="badge bg-warning text-dark">
+                        <i class="bi bi-hourglass-split"></i> Pending
+                    </span>
+                    {% endif %}
+                </td>
+
             </tr>
             {% else %}
             <tr>
-                <td colspan="3" class="text-center text-muted">No products added</td>
+                <td colspan="4" class="text-center text-muted">No products added</td>
             </tr>
             {% endfor %}
         </tbody>

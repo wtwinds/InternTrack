@@ -1,6 +1,7 @@
 from flask import Flask, render_template, flash, request, redirect, session
 from pymongo import MongoClient
 from config import Config
+from bson.objectid import ObjectId
 
 app=Flask(__name__)
 app.secret_key=Config.SECRET_KEY
@@ -67,7 +68,8 @@ def save_product():
         "product_name":product_name,
         "apm": apm,
         "developer": developer,
-        "created_by":session.get("user")       
+        "created_by":session.get("user"),
+        "status": "pending"       
     })
     return redirect("/employee")
 
@@ -114,6 +116,29 @@ def admin_dashboard():
 
     return render_template("admin_dashboard.html", users=all_users)
 
+#----Approve------------------
+@app.route("/approve-product/<id>")
+def approve_product(id):
+    if session.get("role") != "admin":
+        return redirect("/")
+
+    products.update_one(
+        {"_id": ObjectId(id)},
+        {"$set": {"status": "approved"}}
+    )
+    return redirect(request.referrer or "/admin")
+
+#----Reject---------------------------
+@app.route("/reject-product/<id>")
+def reject_product(id):
+    if session.get("role") != "admin":
+        return redirect("/")
+
+    products.update_one(
+        {"_id": ObjectId(id)},
+        {"$set": {"status": "rejected"}}
+    )
+    return redirect(request.referrer or "/admin")
 
 #-----Employee Detail (NEW PAGE)------
 @app.route("/admin/user/<name>")

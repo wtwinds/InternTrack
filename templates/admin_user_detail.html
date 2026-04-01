@@ -1,60 +1,101 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="d-flex justify-content-between mb-4">
-    <h2 class="fw-bold">Admin Dashboard</h2>
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+    <h2 class="fw-bold mb-2">Admin Dashboard</h2>
     <a href="/admin" class="btn btn-outline-dark">← Back</a>
 </div>
 
-<div class="card shadow-lg p-5">
+<div class="card shadow-lg p-4 p-md-5">
 
     <!-- PRODUCTS -->
-    <h4 class="mb-3 fw-bold">Product</h4>
+    <h4 class="mb-4 fw-bold">Product</h4>
 
-    <table class="table mb-5">
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>APM</th>
-                <th>Developer</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for p in products %}
-            <tr>
-                <td>{{ p.product_name }}</td>
-                <td>{{ p.apm }}</td>
-                <td>{{ p.developer }}</td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="3" class="text-center">No products</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive"> <!-- 🔥 MOBILE SUPPORT -->
+        <table class="table table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th class="py-3">Product</th>
+                    <th class="py-3">APM</th>
+                    <th class="py-3">Developer</th>
+                    <th class="py-3 text-center">Status</th>
+                    <th class="py-3 text-center">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for p in products %}
+                <tr>
+                    <td class="py-3 fw-semibold">{{ p.product_name }}</td>
+                    <td class="py-3">{{ p.apm }}</td>
+                    <td class="py-3">{{ p.developer }}</td>
+
+                    <!-- STATUS -->
+                    <td class="py-3 text-center">
+                        {% if p.status == "approved" %}
+                        <span class="badge bg-success px-3 py-2">
+                            <i class="bi bi-check-circle-fill"></i> Approved
+                        </span>
+                        {% elif p.status == "rejected" %}
+                        <span class="badge bg-danger px-3 py-2">
+                            <i class="bi bi-x-circle-fill"></i> Rejected
+                        </span>
+                        {% else %}
+                        <span class="badge bg-warning text-dark px-3 py-2">
+                            <i class="bi bi-hourglass-split"></i> Pending
+                        </span>
+                        {% endif %}
+                    </td>
+
+                    <!-- ACTION -->
+                    <td class="py-3 text-center">
+                        <div class="d-flex justify-content-center gap-2 flex-wrap">
+                            <a href="/approve-product/{{ p._id }}" class="btn btn-success btn-sm px-3">
+                                <i class="bi bi-check-lg"></i>
+                            </a>
+
+                            <a href="/reject-product/{{ p._id }}" class="btn btn-danger btn-sm px-3">
+                                <i class="bi bi-x-lg"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center py-4 text-muted">
+                        No products
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
     <!-- SKILLS -->
-    <h4 class="fw-bold mb-3">Skills</h4>
+    <h4 class="fw-bold mb-4 mt-4">Skills</h4>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Skill Name</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for s in skills %}
-            <tr>
-                <td>{{ s.skill }}</td>
-            </tr>
-            {% else %}
-            <tr>
-                <td class="text-center">No skills</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th class="py-3">Skill Name</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for s in skills %}
+                <tr>
+                    <td class="py-3">{{ s.skill }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td class="text-center py-4 text-muted">No skills</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 </div>
 
