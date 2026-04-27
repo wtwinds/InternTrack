@@ -1,4 +1,6 @@
-class Config:
-    SECRET_KEY = "interntrack_secret"
+import os
 
-    MONGO_URI = "mongodb+srv://wtwinds26_db_user:I0UbuFNuGg5R48QX@cluster0.sjkdkh8.mongodb.net/interntrack?retryWrites=true&w=majority"
+class Config:
+    SECRET_KEY = os.getenv("SECRET_KEY", "fallback_secret")
+    MONGO_URI = os.getenv("MONGO_URI")
+    DB_NAME = os.getenv("DB_NAME", "interntrack")

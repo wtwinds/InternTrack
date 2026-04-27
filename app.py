@@ -2,15 +2,28 @@ from flask import Flask, render_template, flash, request, redirect, session
 from pymongo import MongoClient
 from config import Config
 from bson.objectid import ObjectId
+import os
 
-app=Flask(__name__)
-app.secret_key=Config.SECRET_KEY
+# 🔥 load .env only for local
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except:
+    pass
 
-client=MongoClient(Config.MONGO_URI)
-db=client["interntrack"]
-users=db["users"]
-products=db["products"]
-skills=db["skills"]
+app = Flask(__name__)
+app.secret_key = Config.SECRET_KEY
+
+# ================= DATABASE =================
+if not Config.MONGO_URI:
+    raise Exception("❌ MONGO_URI missing")
+
+client = MongoClient(Config.MONGO_URI)
+db = client[Config.DB_NAME]
+
+users = db["users"]
+products = db["products"]
+skills = db["skills"]
 
 #---------Login--------------
 @app.route("/", methods=["GET","POST"])
